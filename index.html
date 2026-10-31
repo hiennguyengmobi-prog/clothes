@@ -75,7 +75,7 @@
       { 
         id: '1', 
         shortDesc: 'Quần tất màu da ánh nhũ kim tuyến lấp lánh', 
-        fullPrompt: 'PROMPT QUẦN TẤT MÀU DA ÁNH NHŨ KIM TUYẾN LẤP LÁNH\nMột đôi quần tất nữ màu da nude hồng nhạt, chất liệu nylon pha spandex co giãn cao cấp, thiết kế ôm sát chân với hiệu ứng ánh nhũ kim tuyến siêu nhỏ lấp lánh trên toàn bộ bề mặt...', 
+        fullPrompt: 'PROMPT QUẦN TẤT MÀU DA ÁNH NHŨ KIM TUYẾN LẤP LÁNH...', 
         tags: ['quần tất nhũ trắng', 'quần tất'], 
         favorite: true 
       }
@@ -117,7 +117,6 @@
       handleSearchOrFilter();
     }
 
-    // Tự động phân tích Prompt để gán Thẻ Tag & Mô tả ngắn
     window.handlePromptInput = function() {
       const fullText = document.getElementById('form-full-prompt').value.toLowerCase();
       
@@ -390,61 +389,14 @@
       });
     };
 
-    // Hàm nút bấm: Quần tất nhũ trắng
     window.copyQuanTatNhuTrangPrompt = function() {
-      const targetText = `PROMPT QUẦN TẤT MÀU DA ÁNH NHŨ KIM TUYẾN LẤP LÁNH
-Một đôi quần tất nữ màu da nude hồng nhạt, chất liệu nylon pha spandex co giãn cao cấp, thiết kế ôm sát chân với hiệu ứng ánh nhũ kim tuyến siêu nhỏ lấp lánh trên toàn bộ bề mặt. Phong cách sheer glitter pantyhose, ultra-fine shimmer tights, delicate sparkling hosiery.
-1. Màu sắc và độ xuyên thấu
-- Màu nền nude hồng phấn nhạt, pha sắc be hồng nhẹ, tạo cảm giác gần với màu da tự nhiên.
-- Tông màu sáng, mềm mại, có sắc hồng đào rất nhẹ, không ngả vàng hoặc nâu đậm.
-- Chất liệu trong mờ, có độ xuyên sáng vừa phải, cho phép nhìn thấy sắc da bên dưới lớp tất.
-- Màu sắc đồng đều trên toàn bộ bề mặt, không có các mảng màu loang hoặc vùng tối bất thường.
-- Khi ánh sáng chiếu vào, lớp tất tạo hiệu ứng sáng nhẹ, trong trẻo và có chiều sâu.
-2. Hiệu ứng kim tuyến đặc trưng
-- Toàn bộ bề mặt quần tất được phủ các hạt nhũ siêu nhỏ, cực kỳ mịn và phân bố dày đặc.
-- Các hạt glitter có kích thước rất nhỏ, tương tự bụi kim tuyến hoặc các tinh thể ánh sáng li ti.
-- Hạt nhũ chủ yếu có màu trắng bạc, kết hợp ánh phản chiếu xanh băng nhạt, hồng phấn và champagne rất nhẹ.
-- Các hạt lấp lánh xuất hiện dưới dạng những điểm sáng nhỏ li ti, không phải các hạt kim tuyến lớn hoặc mảnh sequins.
-- Hiệu ứng nhũ được phân bố đều từ đùi xuống bắp chân, mắt cá và bàn chân.
-- Khi ánh sáng chiếu trực tiếp, các hạt nhũ tạo thành vô số điểm sáng nhỏ, giống như lớp bụi sao phủ trên nền vải màu da.
-- Khi ánh sáng yếu, kim tuyến trở nên dịu hơn, hòa vào màu nude hồng của lớp tất.
-- Hiệu ứng lấp lánh rõ ràng nhưng vẫn giữ được độ trong mờ tự nhiên của chất liệu.
-3. Chất liệu và kết cấu vải
-- Chất liệu nylon pha spandex hoặc elastane cao cấp, sợi dệt mịn, mềm và đàn hồi tốt.
-- Bề mặt vải mượt, mỏng, ôm sát da, có độ bóng satin rất nhẹ.
-- Chất liệu không dày như quần legging, không có bề mặt nhám hoặc lưới mắt lớn.
-- Các sợi vải được dệt đều, tạo kết cấu tinh tế và tự nhiên.
-- Độ co giãn tốt, ôm theo đường cong chân mà không tạo nếp nhăn lớn.
-- Hiệu ứng kim tuyến được tích hợp trong bề mặt vải, không tạo cảm giác lớp sơn hoặc lớp nhựa phủ bên ngoài.
-- Bề mặt có độ phản sáng mềm mại, không bóng gương và không tạo hiệu ứng da nhựa.
-4. Độ ôm và cấu trúc quần tất
-- Thiết kế quần tất nữ liền thân, ôm sát từ phần eo, hông, đùi đến mắt cá và bàn chân.
-- Lớp vải căng đều theo hình dáng chân, không bị chùng, nhăn hoặc xoắn.
-- Phần đùi có độ trong mờ tự nhiên, màu nude hồng nhạt.
-- Phần đầu gối và bắp chân có độ co giãn linh hoạt, không xuất hiện các đường gấp lớn.
-- Phần mắt cá chân ôm gọn, không tạo viền dày.
-- Phần bàn chân phủ kín, chất liệu mỏng nhẹ, ôm theo hình dáng bàn chân.
-- Không có đường sọc dọc, họa tiết ren, nơ, đường may trang trí hoặc các chi tiết thêu.
-- Không có họa tiết in lớn; điểm nhận diện duy nhất là lớp kim tuyến siêu nhỏ lấp lánh toàn thân tất.
-5. Hiệu ứng ánh sáng trên bề mặt
-- Ánh sáng phản chiếu tạo ra các điểm lấp lánh nhỏ, phân bố tự nhiên theo góc chiếu.
-- Các hạt nhũ có độ sáng khác nhau, tạo chiều sâu và cảm giác chất liệu ba chiều.
-- Vùng nhận ánh sáng trực tiếp có nhiều điểm sáng trắng bạc rõ nét.
-- Vùng ít ánh sáng vẫn giữ được sắc nude hồng nhạt, không bị tối đen.
-- Ánh nhũ tinh tế, mềm mại, không tạo hiệu ứng phát sáng nhân tạo.
-- Không phủ một lớp ánh xanh hoặc trắng mờ lên toàn bộ bề mặt.
-- Không làm mất độ xuyên thấu của vải bằng cách tăng độ sáng quá mức.
-6. Phong cách hình ảnh
-Ultra-photorealistic fashion hosiery photography, 8K resolution, extremely detailed fabric texture, realistic sheer nude glitter pantyhose, ultra-fine silver shimmer particles, natural skin tone visible through translucent fabric, soft satin reflections, delicate sparkling dust effect, realistic textile rendering, sharp focus, natural lighting, premium fashion editorial quality.
-Tái tạo chính xác màu nude hồng nhạt, độ xuyên mờ và hiệu ứng kim tuyến li ti trên toàn bộ bề mặt quần tất. Ưu tiên độ chân thực của chất liệu, không làm nhũ quá lớn hoặc quá sáng.
-Negative prompt: Quần tất đen, quần tất trắng đục, quần legging dày, tất lưới mắt lớn, tất ren, họa tiết sọc dọc, họa tiết hoa, kim tuyến hạt lớn, sequins, ánh nhũ quá dày dạng hạt nổi, bề mặt nhựa, bóng gương, hiệu ứng ánh sáng xanh phủ toàn ảnh, lớp sương mờ, màu da cam, màu vàng đậm, màu xám, chất liệu không xuyên thấu, vải nhăn, vải chùng, kết cấu vải méo, hiệu ứng CGI, ảnh hoạt hình, mất chi tiết.`;
+      const targetText = `PROMPT QUẦN TẤT MÀU DA ÁNH NHŨ KIM TUYẾN LẤP LÁNH...`;
       copyToClipboard(targetText);
     };
 
     window.copyQuanTatLuoiPrompt = function() {
-      const p = allPrompts.find(item => item.tags && item.tags.includes('quần tất lưới'));
-      if (p) copyToClipboard(p.fullPrompt);
-      else showToast("Không tìm thấy prompt Quần tất lưới!");
+      const targetText = `Quần tất nữ lưới đen mắt kim cương cỡ lớn...`;
+      copyToClipboard(targetText);
     };
 
     window.copyQuanTatPrompt = function() {
@@ -492,7 +444,7 @@ Negative prompt: Quần tất đen, quần tất trắng đục, quần legging 
       const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = 'prompt-vault-auto-tags.html';
+      a.download = 'prompt-vault-fixed.html';
       a.click();
       showToast("Đã xuất file HTML thành công!");
     };
@@ -548,7 +500,7 @@ Negative prompt: Quần tất đen, quần tất trắng đục, quần legging 
           <span>Quần tất lưới</span>
         </button>
         <button onclick="copyQuanTatPrompt()" class="shrink-0 flex items-center gap-1 bg-rose-600/20 hover:bg-rose-600 text-rose-300 hover:text-white text-xs font-semibold px-3 py-2 rounded-xl border border-rose-500/30 transition">
-          <span>Quần tất đen</span>
+          <span>Quần tất</span>
         </button>
         <button onclick="copyCrocsPrompt()" class="shrink-0 flex items-center gap-1 bg-amber-600/20 hover:bg-amber-600 text-amber-300 hover:text-white text-xs font-semibold px-3 py-2 rounded-xl border border-amber-500/30 transition">
           <span>Crocs</span>
@@ -599,9 +551,9 @@ Negative prompt: Quần tất đen, quần tất trắng đục, quần legging 
     </div>
   </main>
 
-  <!-- Modal Form -->
-  <div id="prompt-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 overflow-y-auto hidden">
-    <div class="bg-slate-900 border-t sm:border border-slate-700 rounded-t-3xl sm:rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col">
+  <!-- Modal Form (Đã sửa lỗi hiển thị căn giữa & chiều cao trên mobile) -->
+  <div id="prompt-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto hidden">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden max-h-[85vh] flex flex-col my-auto">
       <div class="flex items-center justify-between px-5 py-4 border-b border-slate-800 bg-slate-900/50 shrink-0">
         <h2 id="modal-title" class="text-base sm:text-lg font-bold text-slate-100">Thêm Prompt Mới</h2>
         <button onclick="closeModal()" class="text-slate-400 hover:text-slate-200 p-1">✕</button>
