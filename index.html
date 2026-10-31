@@ -2857,6 +2857,25 @@ RÀNG BUỘC KHI CHỈNH SỬA: Sử dụng ảnh tham chiếu làm nguồn chí
       fetchFromGitHub(); // Tự động đồng bộ từ GitHub khi mở trang
     });
   </script>
+  <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyD6SZKedd9pjqk67_b37QHOjXUnPgzslvc",
+    authDomain: "prompt-clothes.firebaseapp.com",
+    projectId: "prompt-clothes",
+    storageBucket: "prompt-clothes.firebasestorage.app",
+    messagingSenderId: "1094881159260",
+    appId: "1:1094881159260:web:80d49982505b16dd991e99"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+</script>
 
 
 </body></html>
