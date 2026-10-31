@@ -76,7 +76,7 @@
       { 
         id: '1', 
         shortDesc: 'Quần tất màu da ánh nhũ kim tuyến lấp lánh', 
-        fullPrompt: 'PROMPT QUẦN TẤT MÀU DA ÁNH NHŨ KIM TUYẾN LẤP LÁNH...', 
+        fullPrompt: '...', 
         tags: ['quần tất nhũ trắng', 'quần tất'], 
         favorite: true 
       }
@@ -393,19 +393,23 @@
       e.preventDefault();
       const id = document.getElementById('prompt-id').value;
       const fullPrompt = document.getElementById('form-full-prompt').value;
-      const shortDesc = document.getElementById('form-short-desc').value; // Thủ công
+      
+      // Xử lý tiêu đề: Viết thường toàn bộ, sau đó viết hoa chữ cái đầu tiên
+      let rawDesc = document.getElementById('form-short-desc').value.trim();
+      let formattedDesc = rawDesc.charAt(0).toUpperCase() + rawDesc.slice(1).toLowerCase();
+    
       const rawTags = document.getElementById('form-tags').value;
       const tags = rawTags ? rawTags.split(',').map(t => t.trim().toLowerCase()).filter(t => t) : ['fashion'];
-
+    
       const existing = allPrompts.find(p => p.id === id);
       const promptData = {
         id: id || null,
         fullPrompt,
-        shortDesc,
+        shortDesc: formattedDesc, // Lưu tiêu đề đã được chuẩn hóa
         tags,
         favorite: existing ? existing.favorite : false
       };
-
+    
       await window.savePromptToDB(promptData);
       closeModal();
     };
