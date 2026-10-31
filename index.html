@@ -232,25 +232,22 @@
 
       tagCloudEl.innerHTML = html;
 
-      // Xử lý ẩn hiện phần mở rộng dòng dưới nếu có nút Xem thêm
       const tagWrapper = document.getElementById('tag-wrapper');
-      if (tagWrapper) {
-        if (isTagExpanded) {
-          tagWrapper.classList.remove('max-h-[42px]', 'overflow-hidden');
-          tagWrapper.classList.add('flex-wrap');
-        } else {
-          tagWrapper.classList.add('max-h-[42px]', 'overflow-hidden');
-          tagWrapper.classList.remove('flex-wrap');
-        }
-      }
-
       const expandBtn = document.getElementById('tag-expand-btn');
-      if (expandBtn) {
+
+      if (tagWrapper && expandBtn) {
         if (tagsArray.length > 3) {
           expandBtn.classList.remove('hidden');
-          expandBtn.innerText = isTagExpanded ? '▲ Thu gọn' : '▼ Xem thêm';
+          if (isTagExpanded) {
+            tagWrapper.classList.remove('max-h-[38px]', 'overflow-hidden');
+            expandBtn.innerText = '▲ Thu gọn';
+          } else {
+            tagWrapper.classList.add('max-h-[38px]', 'overflow-hidden');
+            expandBtn.innerText = '▼ Xem thêm';
+          }
         } else {
           expandBtn.classList.add('hidden');
+          tagWrapper.classList.remove('max-h-[38px]', 'overflow-hidden');
         }
       }
     }
@@ -641,20 +638,20 @@ Yêu cầu bắt buộc: Chỉ mô tả chiếc quần tất lưới đen mắt 
         <button onclick="clearFilters()" class="text-xs text-indigo-400 hover:text-indigo-300 font-medium py-1 self-end sm:self-center">Xóa bộ lọc</button>
       </div>
       <div>
-        <div class="flex items-start gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+        <div class="flex items-start gap-1.5 pb-1">
           <button id="btn-filter-fav" onclick="toggleFavoriteFilter()" class="shrink-0 px-3 py-1.5 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 bg-slate-900/90 text-slate-300 border border-slate-700/75">
             <span>❤️ Đã thích</span>
             <span id="fav-count-badge" class="text-[10px] opacity-75 bg-slate-800 px-1.5 py-0.5 rounded-full">0</span>
           </button>
           <div class="h-8 w-px bg-slate-700 shrink-0 mx-0.5"></div>
           
-          <!-- Khu vực thẻ tag đã được bọc chuẩn để không bị tràn -->
-          <div class="flex-1 flex flex-col gap-1.5 min-w-0">
-            <div id="tag-wrapper" class="flex flex-wrap items-center gap-1.5 max-h-[38px] overflow-hidden transition-all duration-300">
+          <!-- Khu vực chứa các thẻ tag và nút điều khiển -->
+          <div class="flex-1 flex flex-col gap-2 min-w-0">
+            <div id="tag-wrapper" class="flex flex-wrap items-center gap-1.5 transition-all duration-300 max-h-[38px] overflow-hidden">
               <div id="tag-cloud" class="contents"></div>
             </div>
             <div>
-              <button id="tag-expand-btn" onclick="toggleTagExpand()" class="text-[11px] text-indigo-400 hover:text-indigo-300 font-medium hidden py-0.5">▼ Xem thêm</button>
+              <button id="tag-expand-btn" onclick="toggleTagExpand()" class="text-[11px] text-indigo-400 hover:text-indigo-300 font-medium hidden py-1">▼ Xem thêm</button>
             </div>
           </div>
         </div>
