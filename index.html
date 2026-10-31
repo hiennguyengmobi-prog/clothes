@@ -552,6 +552,20 @@ Yêu cầu bắt buộc: Chỉ mô tả chiếc quần tất lưới đen mắt 
       initApp();
     });
   </script>
+  <script>
+        // Tự động định dạng tiêu đề: Viết thường toàn bộ, chỉ viết hoa chữ cái đầu tiên khi người dùng nhập hoặc dán
+    window.addEventListener('DOMContentLoaded', () => {
+      const shortDescInput = document.getElementById('form-short-desc');
+      if (shortDescInput) {
+        shortDescInput.addEventListener('blur', function() {
+          let val = this.value.trim();
+          if (val.length > 0) {
+            this.value = val.charAt(0).toUpperCase() + val.slice(1).toLowerCase();
+          }
+        });
+      }
+    });
+  </script>
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
