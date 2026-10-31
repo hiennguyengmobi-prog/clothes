@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Prompt Vault">
-  <title>Hệ Thống Quản Lý Prompt Trang Phục Thông Minh (Cloud Sync & Tag Toggle)</title>
+  <title>Hệ Thống Quản Lý Prompt Trang Phục Thông Minh (Cloud Sync)</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -50,7 +50,7 @@
     const itemsPerPage = 9;
     let selectedTag = '';
     let isFavFilterActive = false;
-    let isTagExpanded = false; // Trạng thái ẩn/hiện thẻ tag
+    let isTagExpanded = false; // Trạng thái mở rộng danh sách tag
 
     // Danh sách quy tắc từ khóa -> Thẻ Tag tự động
     const keywordTagRules = [
@@ -118,14 +118,10 @@
       handleSearchOrFilter();
     }
 
+    // Tự động gợi ý thẻ tag khi nhập prompt, không tự động điền tiêu đề nữa
     window.handlePromptInput = function() {
       const fullText = document.getElementById('form-full-prompt').value.toLowerCase();
       
-      if (!document.getElementById('form-short-desc').value) {
-        const rawText = document.getElementById('form-full-prompt').value;
-        document.getElementById('form-short-desc').value = rawText.slice(0, 50) + (rawText.length > 50 ? '...' : '');
-      }
-
       const detectedTags = new Set();
       keywordTagRules.forEach(rule => {
         if (rule.keywords.some(kw => fullText.includes(kw))) {
@@ -133,7 +129,7 @@
         }
       });
 
-      if (detectedTags.size > 0) {
+      if (detectedTags.size > 0 && !document.getElementById('form-tags').value) {
         document.getElementById('form-tags').value = Array.from(detectedTags).join(', ');
       }
     };
@@ -228,22 +224,35 @@
 
       let tagsArray = Object.entries(tagCounts);
       let html = '';
-      
-      // Giới hạn hiển thị khoảng 6-8 tag đầu tiên khi thu gọn, bấm Xem thêm để hiện hết
-      const displayTags = isTagExpanded ? tagsArray : tagsArray.slice(0, 7);
 
-      displayTags.forEach(([tag, count]) => {
+      tagsArray.forEach(([tag, count]) => {
         const active = selectedTag === tag ? 'bg-indigo-600 text-white border-indigo-500' : 'bg-slate-900/90 text-slate-300 border-slate-700/75 hover:bg-slate-800';
-        html += `<button onclick="filterByTag('${tag}')" class="px-2.5 py-1 rounded-xl text-xs font-semibold border transition ${active}">${tag} (${count})</button>`;
+        html += `<button onclick="filterByTag('${tag}')" class="shrink-0 px-2.5 py-1.5 rounded-xl text-xs font-semibold border transition ${active}">${tag} (${count})</button>`;
       });
 
-      // Nút ẩn/hiện thêm tag
-      if (tagsArray.length > 7) {
-        const btnText = isTagExpanded ? '▲ Thu gọn' : '▼ Xem thêm (' + (tagsArray.length - 7) + ')';
-        html += `<button onclick="toggleTagExpand()" class="px-2.5 py-1 rounded-xl text-xs font-semibold bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 hover:bg-indigo-600/40 transition">${btnText}</button>`;
+      tagCloudEl.innerHTML = html;
+
+      // Xử lý ẩn hiện phần mở rộng dòng dưới nếu có nút Xem thêm
+      const tagWrapper = document.getElementById('tag-wrapper');
+      if (tagWrapper) {
+        if (isTagExpanded) {
+          tagWrapper.classList.remove('max-h-[42px]', 'overflow-hidden');
+          tagWrapper.classList.add('flex-wrap');
+        } else {
+          tagWrapper.classList.add('max-h-[42px]', 'overflow-hidden');
+          tagWrapper.classList.remove('flex-wrap');
+        }
       }
 
-      tagCloudEl.innerHTML = html;
+      const expandBtn = document.getElementById('tag-expand-btn');
+      if (expandBtn) {
+        if (tagsArray.length > 3) {
+          expandBtn.classList.remove('hidden');
+          expandBtn.innerText = isTagExpanded ? '▲ Thu gọn' : '▼ Xem thêm';
+        } else {
+          expandBtn.classList.add('hidden');
+        }
+      }
     }
 
     window.toggleTagExpand = function() {
@@ -384,7 +393,7 @@
       e.preventDefault();
       const id = document.getElementById('prompt-id').value;
       const fullPrompt = document.getElementById('form-full-prompt').value;
-      const shortDesc = document.getElementById('form-short-desc').value;
+      const shortDesc = document.getElementById('form-short-desc').value; // Thủ công
       const rawTags = document.getElementById('form-tags').value;
       const tags = rawTags ? rawTags.split(',').map(t => t.trim().toLowerCase()).filter(t => t) : ['fashion'];
 
@@ -462,7 +471,7 @@
       const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = 'prompt-vault-fixed-tags.html';
+      a.download = 'prompt-vault-fixed.html';
       a.click();
       showToast("Đã xuất file HTML thành công!");
     };
@@ -479,6 +488,8 @@
     ::-webkit-scrollbar-track { background: #0f172a; }
     ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
     ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    .scrollbar-none::-webkit-scrollbar { display: none; }
+    .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
 </head>
 <body class="h-full flex flex-col antialiased selection:bg-indigo-500 selection:text-white">
@@ -544,14 +555,24 @@
         <button onclick="clearFilters()" class="text-xs text-indigo-400 hover:text-indigo-300 font-medium py-1 self-end sm:self-center">Xóa bộ lọc</button>
       </div>
       <div>
-        <!-- Đã sửa thành flex-wrap để xuống dòng mượt mà, kèm nút Xem thêm/Thu gọn -->
-        <div class="flex items-center gap-1.5 pb-1">
+        <!-- Cố định nút "Đã thích" thẳng hàng với dòng thẻ tag đầu tiên -->
+        <div class="flex items-start gap-1.5">
           <button id="btn-filter-fav" onclick="toggleFavoriteFilter()" class="shrink-0 px-3 py-1.5 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 bg-slate-900/90 text-slate-300 border border-slate-700/75">
             <span>❤️ Đã thích</span>
             <span id="fav-count-badge" class="text-[10px] opacity-75 bg-slate-800 px-1.5 py-0.5 rounded-full">0</span>
           </button>
-          <div class="h-4 w-px bg-slate-700 shrink-0 mx-0.5"></div>
-          <div id="tag-cloud" class="flex flex-wrap items-center gap-1.5 flex-1"></div>
+          <div class="h-8 w-px bg-slate-700 shrink-0 mx-0.5"></div>
+          
+          <div class="flex-1 flex flex-col gap-1.5">
+            <!-- Khu vực chứa các thẻ tag -->
+            <div id="tag-wrapper" class="flex flex-wrap items-center gap-1.5 max-h-[42px] overflow-hidden transition-all duration-300">
+              <div id="tag-cloud" class="contents"></div>
+            </div>
+            <!-- Nút Xem thêm / Thu gọn tag -->
+            <div>
+              <button id="tag-expand-btn" onclick="toggleTagExpand()" class="text-[11px] text-indigo-400 hover:text-indigo-300 font-medium hidden py-0.5">▼ Xem thêm</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -578,16 +599,16 @@
       <form id="prompt-form" onsubmit="savePrompt(event)" class="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1">
         <input type="hidden" id="prompt-id" value="">
         <div class="space-y-1.5">
+          <label class="block text-xs sm:text-sm font-semibold text-slate-200">Tiêu đề / Mô tả ngắn trang phục (Nhập thủ công) *</label>
+          <input type="text" id="form-short-desc" required class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs sm:text-sm text-slate-100" placeholder="Nhập tiêu đề hoặc mô tả ngắn...">
+        </div>
+        <div class="space-y-1.5">
           <label class="block text-xs sm:text-sm font-semibold text-slate-200">Nội dung Prompt Chi Tiết *</label>
           <textarea id="form-full-prompt" required rows="5" oninput="handlePromptInput()" class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs sm:text-sm text-slate-100 font-mono" placeholder="Dán prompt chi tiết vào đây..."></textarea>
         </div>
         <div class="space-y-1.5">
-          <label class="block text-xs sm:text-sm font-semibold text-slate-200">Mô tả ngắn trang phục (Tự động)</label>
-          <input type="text" id="form-short-desc" class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs sm:text-sm text-slate-100">
-        </div>
-        <div class="space-y-1.5">
-          <label class="block text-xs sm:text-sm font-semibold text-slate-200">Thẻ Tag (Tự động tạo dựa trên từ khóa)</label>
-          <input type="text" id="form-tags" class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs sm:text-sm text-slate-100" placeholder="Thẻ tag sẽ tự động xuất hiện khi dán prompt...">
+          <label class="block text-xs sm:text-sm font-semibold text-slate-200">Thẻ Tag (Tự động hoặc nhập thủ công)</label>
+          <input type="text" id="form-tags" class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-xs sm:text-sm text-slate-100" placeholder="Thẻ tag cách nhau bằng dấu phẩy...">
         </div>
         <div class="flex items-center justify-end gap-3 pt-3 border-t border-slate-800 shrink-0">
           <button type="button" onclick="closeModal()" class="px-4 py-2.5 bg-slate-800 text-slate-300 text-xs sm:text-sm font-medium rounded-xl">Hủy</button>
